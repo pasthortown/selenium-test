@@ -1,41 +1,33 @@
 from time import sleep
-from tester import Test
 import random
+from tester import Test
 
-class Steps:
-    def __init__(self, url):
-        self.tester = Test(url)
+class StepsTomaPedido:
+    def __init__(self, tester: Test, url_maxpoint, passwd_adm):
+        self.tester: Test = tester
+        self.url_maxpoint = url_maxpoint
+        self.passwd_adm = passwd_adm
     
-    def login(self, passwd):
-        print("Abriendo Maxpoint")
-        user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
-        print("Usuario Asignado: " + user)
-        self.tester.fill_textbox_by_id("usr_clave", passwd)
-        self.tester.click_button_by_id("btn_ingresarOk")
-        self.tester.click_button_by_id("alertify-ok")
-        is_full_service = True
-        try:
-            self.tester.wait_for_html_element_by_id("PedidoRapido",5)
-        except:
-            is_full_service = False
-            pass
-        if is_full_service:
-            print("Estación Full Service")
-        return is_full_service
-
-    def seleccionar_mesa(self):
+    def seleccionar_mesa(self, id_mesa_force = ''):
         mesas = self.tester.get_elements_by_css_class("mesa")
-        id_mesa = mesas[random.randint(0, len(mesas) - 1)].get_attribute("id")
+        id_ultima_mesa = mesas[len(mesas) - 1].get_attribute("id")
+        id_mesa = mesas[random.randint(0, len(mesas) - 2)].get_attribute("id")
+        if id_mesa_force != '':
+            id_mesa = id_mesa_force
         print("Mesa seleccionada: " + id_mesa)
         sleep(2)
         self.tester.click_button_by_id(id_mesa)
         sleep(2)
-        self.tester.fill_textbox_by_id("cantidad","2")
-        botones_dialogo = self.tester.get_elements_by_css_class("ui-button", False)
-        for boton in botones_dialogo:
-            if(boton.get_attribute("innerHTML") == '<span class="ui-button-text">Continuar</span>'):
-                boton.click()
-                break
+        try:
+            self.tester.fill_textbox_by_id("cantidad","2")
+            botones_dialogo = self.tester.get_elements_by_css_class("ui-button", False)
+            for boton in botones_dialogo:
+                if(boton.get_attribute("innerHTML") == '<span class="ui-button-text">Continuar</span>'):
+                    boton.click()
+                    break
+        except:
+            pass
+        return id_ultima_mesa
     
     def solicita_datos_cliente(self):
         solicita_datos_cliente = True
@@ -102,35 +94,3 @@ class Steps:
                         except:
                             pass
                 self.tester.click_button_by_id("btn_prgnts_sgrds_cnfrmar")
-        
-    def cobrar(self):
-        print("Cobrando")
-        self.tester.click_button_by_id("cobrar")
-        sleep(2)
-        cfac_id = self.tester.get_attribute_of_html_element_by_id("txtNumFactura","value", False)
-        print("Factura: " + cfac_id)
-        sleep(2)
-
-    def pago_efectivo(self):
-        print("Pago en Efectivo")
-        self.tester.click_button_by_id("btnAplicarPago")
-        sleep(2)
-
-    def factura_consumidor_final(self):
-        print("Factura a Consumidor Final")
-        self.tester.click_button_by_id("btnConsumidorFinal")
-        sleep(2)
-    
-    def factura_con_datos(self):
-        print("Factura Con Datos")
-        self.tester.fill_textbox_by_id("txtClienteCI","1720364049")
-        self.tester.click_button_by_id("btnBuscaCliente")
-        self.tester.click_button_by_id("btnClienteConfirmarDatos")
-        sleep(2)
-        self.tester.click_button_by_id("alertify-cancel")
-        sleep(2)
-        self.tester.fill_textbox_by_id("txtClienteNombre","LUIS ALFONSO SALAZAR VACA")
-        self.tester.fill_textbox_by_id("txtClienteFono","0996583107")
-        self.tester.fill_textbox_by_id("txtCorreo","luissalazarvaca1986@gmail.com")
-        sleep(2)
-        self.tester.click_button_by_id("btnClienteConfirmarDatosFacturar")
