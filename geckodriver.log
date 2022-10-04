@@ -6287,3 +6287,112 @@ webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
 JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
 1664911481307	Marionette	INFO	Stopped listening on port 52095
 console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1664911757162	geckodriver	INFO	Listening on 127.0.0.1:54371
+1664911760229	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "54372" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile66V4mF"
+1664911760468	Marionette	INFO	Marionette enabled
+1664911760471	Marionette	INFO	Listening on port 54415
+WebDriver BiDi listening on ws://127.0.0.1:54372
+Read port: 54415
+1664911760644	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile66V4mF\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:54372/devtools/browser/5d8035c7-fb78-46a4-bf32-6682fd0afbf0
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+JavaScript error: http://192.168.101.68:1883/pos/js/jquery.jb.shortscroll.js, line 52: TypeError: jQuery.event.handle is undefined
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664911916532	geckodriver	INFO	Listening on 127.0.0.1:54725
+1664911919564	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "54726" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile5gCddO"
+1664911919772	Marionette	INFO	Marionette enabled
+1664911919775	Marionette	INFO	Listening on port 54744
+Read port: 54744
+WebDriver BiDi listening on ws://127.0.0.1:54726
+1664911919853	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile5gCddO\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:54726/devtools/browser/f06e7903-a455-468e-91fe-bd0e9edd7a47
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664911958971	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1664911970563	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1664912098406	geckodriver	INFO	Listening on 127.0.0.1:55145
+1664912101437	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "55146" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilesFHIJy"
+1664912101641	Marionette	INFO	Marionette enabled
+1664912101643	Marionette	INFO	Listening on port 55163
+Read port: 55163
+WebDriver BiDi listening on ws://127.0.0.1:55146
+1664912101722	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1664912178003	geckodriver	INFO	Listening on 127.0.0.1:55291
+1664912181066	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "55292" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilesJRQnc"
+1664912181269	Marionette	INFO	Marionette enabled
+1664912181272	Marionette	INFO	Listening on port 55308
+Read port: 55308
+WebDriver BiDi listening on ws://127.0.0.1:55292
+1664912181349	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilesJRQnc\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55292/devtools/browser/ad158fa5-9d92-421e-984a-f9f5f1258fea
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664912256423	Marionette	INFO	Stopped listening on port 55308
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1664912259515	geckodriver	INFO	Listening on 127.0.0.1:55513
+1664912262584	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "55514" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofileKc6eIE"
+1664912262790	Marionette	INFO	Marionette enabled
+1664912262793	Marionette	INFO	Listening on port 55530
+Read port: 55530
+WebDriver BiDi listening on ws://127.0.0.1:55514
+1664912262870	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofileKc6eIE\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55514/devtools/browser/146e7589-093d-41f8-80b6-47e1343e2563
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664912370818	geckodriver	INFO	Listening on 127.0.0.1:55743
+1664912373873	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "55744" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofileyX1rsq"
+1664912374073	Marionette	INFO	Marionette enabled
+1664912374076	Marionette	INFO	Listening on port 55760
+Read port: 55760
+WebDriver BiDi listening on ws://127.0.0.1:55744
+1664912374151	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofileyX1rsq\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55744/devtools/browser/7b1de198-87b5-4821-a187-dadbebcd874f
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664912565209	geckodriver	INFO	Listening on 127.0.0.1:56089
+1664912568252	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "56090" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilepZei3h"
+1664912568460	Marionette	INFO	Marionette enabled
+1664912568463	Marionette	INFO	Listening on port 56103
+Read port: 56103
+WebDriver BiDi listening on ws://127.0.0.1:56090
+1664912568546	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilepZei3h\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:56090/devtools/browser/146a4614-f4e9-4837-ae57-ba5f7ba0310a
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664912627958	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1664912634157	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."

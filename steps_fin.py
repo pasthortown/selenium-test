@@ -119,11 +119,19 @@ class StepsFin:
         sleep(2)
         self.tester.click_button_by_id("alertify-ok")
         sleep(5)
-        self.tester.fill_textbox_by_id("txtArea","Pruebas QA - Desmontado cajero")
-        self.tester.click_button_by_id("btn_okmotivo")
-        sleep(30)
-        self.tester.click_button_by_id("alertify-ok")
-        sleep(5)
+        try:
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(5)
+        except:
+            pass
+        try:
+            self.tester.fill_textbox_by_id("txtArea","Pruebas QA - Desmontado cajero")
+            self.tester.click_button_by_id("btn_okmotivo")
+            sleep(30)
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(5)
+        except:
+            pass
         print("Cajero Desmontado")
     
     def funciones_gerente(self):
@@ -133,7 +141,10 @@ class StepsFin:
             print("Iniciando Cierre de Periodo")
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_adm)
         self.tester.click_button_by_id("btn_ingreso_Admin")
-        self.tester.click_button_by_id("alertify-ok")
+        try:
+            self.tester.click_button_by_id("alertify-ok")
+        except:
+            pass
         sleep(5)
 
     def fin_de_dia(self):    
@@ -154,7 +165,8 @@ class StepsFin:
                 self.tester.click_button_by_id("alertify-ok")
                 sleep(2)
                 break
-            motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/div/input[@class="btn btn-primary"]')
+            motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/input[@class="btn btn-primary"]')
+            motorizados_desmontados = motorizados_asignados[0].get_attribute("value") == 'Ningún Motorizado Asignado'
         print("Motorizados Desasignados")
     
     def cierre_periodo(self):
