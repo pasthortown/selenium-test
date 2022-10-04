@@ -63,7 +63,10 @@ class StepsTomaPedido:
             sleep(2)
             self.tester.click_button_by_id(id_producto)
             sleep(2)
-            self.tester.click_button_by_id("alertify-ok")
+            try:
+                self.tester.click_button_by_id("alertify-ok")        
+            except:
+                pass
             sleep(2)
             tiene_preguntas = True
             try:

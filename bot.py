@@ -9,8 +9,8 @@ from tester import Test
 url_maxpoint = "http://192.168.101.68:1883/pos/"
 passwd_user = "159753"
 passwd_adm= "123"
-productos_factura = 3
-num_facturas = 4
+productos_factura = 1
+num_facturas = 2
 facturas_generadas = []
 tester = Test("http://www.google.com/")
 steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user)
@@ -20,9 +20,10 @@ steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm)
 steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
 
 # steps_inicio.inicio_periodo()
-steps_inicio.asignar_cajero()
+# steps_inicio.asignar_cajero()
+# steps_inicio.confirmar_fondo()
 
-#is_full_service = steps_inicio.login()
+# is_full_service = steps_inicio.login()
 # cuenta_facturas_generadas = 0
 # ultima_mesa = ''
 # num_comprobantes = num_facturas * 2
@@ -43,8 +44,13 @@ steps_inicio.asignar_cajero()
 #     else:
 #         steps_facturacion.factura_con_datos()
 #     if (cuenta_facturas_generadas % 2):    
-#         steps_anulacion.anular_factura(cfac_id)
 #         is_full_service = steps_inicio.login()
+#         if is_full_service:
+#             steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+#         solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
+#         if solicita_datos_cliente:
+#             steps_toma_pedido.omitir_datos_cliente()
+#         steps_anulacion.anular_factura(cfac_id)
 #         if is_full_service:
 #             steps_toma_pedido.seleccionar_mesa(ultima_mesa)
 #         solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
@@ -62,12 +68,12 @@ steps_inicio.asignar_cajero()
 #         folder = "facturas"
 #     steps_facturacion.get_comprobante(factura["cfac_id"], factura["tipo"], './resultados/' + folder + '/' + factura["cfac_id"] + '.png')
 
-# steps_fin.iniciar_desmontado_cajero()
-# steps_fin.retiros()
-# steps_fin.corte_x('./resultados/corte_x.png')
-# steps_fin.retiro_fondo()
-# steps_fin.desasignar_cajero()
-# steps_fin.funciones_gerente()
-# steps_fin.fin_de_dia()
-# steps_fin.desasignar_motorizados()
-# steps_fin.cierre_periodo()
+steps_fin.iniciar_desmontado_cajero()
+steps_fin.retiros()
+steps_fin.corte_x('./resultados/corte_x.png')
+steps_fin.retiro_fondo()
+steps_fin.desasignar_cajero()
+steps_fin.funciones_gerente()
+steps_fin.fin_de_dia()
+steps_fin.desasignar_motorizados()
+steps_fin.cierre_periodo()
