@@ -7,19 +7,22 @@ from steps_toma_pedido import StepsTomaPedido
 from tester import Test
 
 url_maxpoint = "http://192.168.101.68:1883/pos/"
-passwd = "159753"
+passwd_user = "159753"
 passwd_adm= "123"
 productos_factura = 3
 num_facturas = 4
 facturas_generadas = []
 tester = Test("http://www.google.com/")
-steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm)
+steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user)
 steps_toma_pedido = StepsTomaPedido(tester, url_maxpoint, passwd_adm)
 steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm)
 steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm)
 steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
 
-# is_full_service = steps_inicio.login(passwd)
+# steps_inicio.inicio_periodo()
+steps_inicio.asignar_cajero()
+
+#is_full_service = steps_inicio.login()
 # cuenta_facturas_generadas = 0
 # ultima_mesa = ''
 # num_comprobantes = num_facturas * 2
@@ -41,7 +44,7 @@ steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
 #         steps_facturacion.factura_con_datos()
 #     if (cuenta_facturas_generadas % 2):    
 #         steps_anulacion.anular_factura(cfac_id)
-#         is_full_service = steps_inicio.login(passwd)
+#         is_full_service = steps_inicio.login()
 #         if is_full_service:
 #             steps_toma_pedido.seleccionar_mesa(ultima_mesa)
 #         solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
