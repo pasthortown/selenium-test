@@ -71,3 +71,104 @@ class StepsFin:
         sleep(1)
         self.tester.get_elements_by_css_class("keypad-enter2")[0].click()
         sleep(1)
+    
+    def corte_x(self, path):
+        self.iniciar_desmontado_cajero()
+        print("Realizando Corte en X")
+        self.tester.click_button_by_id("btn_impresionCorteX")
+        ctrc_id = self.tester.get_attribute_of_html_element_by_id("IDControlEstacion","value", False)
+        usr_id = self.tester.get_attribute_of_html_element_by_id("hid_usuario","value", False)
+        usr_id_admin = self.tester.get_attribute_of_html_element_by_id("hid_usuario","value", False)
+        self.tester.navigate(self.url_maxpoint +"corte_caja/impresion_Corte_X.php?ctrc_id=" + ctrc_id + "&usr_id=" + usr_id + "&usr_id_admin=" + usr_id_admin + "&tipoReporte=CorteX")
+        self.tester.capture(path)
+        print("Corte en X - Ejecutado")
+        sleep(1)
+
+    def retiro_fondo(self):
+        print("Retirando Fondo")
+        self.tester.click_button_by_id("btn_corteCaja")
+        sleep(2)
+        self.tester.click_button_by_id("alertify-ok")
+        sleep(5)
+        self.tester.click_button_by_id("btn_cash")
+        sleep(2)
+        self.tester.fill_textbox_by_id("usr_claveAdmin", self.passwd_adm)
+        botones = self.tester.get_elements_by_css_class("btnVirtualOKpq")
+        for boton in botones:
+            if boton.get_attribute("innerHTML") == 'OK':
+                boton.click()
+        sleep(2)
+        self.tester.click_button_by_id("alertify-ok")
+        print("Fondo Retirado")
+        sleep(5)
+
+    def desasignar_cajero(self):
+        print("Iniciando Desmontado de Cajero")
+        self.tester.click_button_by_id("btn_corteCaja")
+        sleep(2)
+        self.tester.click_button_by_id("btnTEFECTIVO")
+        sleep(2)
+        cantidades = self.tester.get_elements_by_xpath('//tr/td/input[@class="form-control hasKeypad"]')
+        cantidades[0].click()
+        cantidades[0].clear()
+        cantidades[0].send_keys("0")
+        sleep(1)
+        self.tester.click_button_by_id("ok")
+        sleep(2)
+        self.tester.click_button_by_id("btn_okgeneral")
+        sleep(2)
+        self.tester.click_button_by_id("alertify-ok")
+        sleep(5)
+        self.tester.fill_textbox_by_id("txtArea","Pruebas QA - Desmontado cajero")
+        self.tester.click_button_by_id("btn_okmotivo")
+        sleep(30)
+        self.tester.click_button_by_id("alertify-ok")
+        sleep(5)
+        print("Cajero Desmontado")
+    
+    def funciones_gerente(self):
+        self.tester.navigate(self.url_maxpoint )
+        user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
+        if (user == 'NO ASIGNADO'):
+            print("Iniciando Cierre de Periodo")
+        self.tester.fill_textbox_by_id("usr_clave", self.passwd_adm)
+        self.tester.click_button_by_id("btn_ingreso_Admin")
+        self.tester.click_button_by_id("alertify-ok")
+        sleep(5)
+
+    def fin_de_dia(self):    
+        botones_funciones_gerente = self.tester.get_elements_by_xpath('//input[@class="btnFuncionGerente boton"]')
+        for boton in botones_funciones_gerente:
+            if (boton.get_attribute("value")=="Fin de Dia"):
+                boton.click()
+                break
+        sleep(5)
+
+    def desasignar_motorizados(self):
+        print("Desasignando Motorizados")
+        motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/div/input[@class="btn btn-primary"]')
+        motorizados_desmontados = motorizados_asignados[0].get_attribute("value") == 'Ningún Motorizado Asignado'
+        while motorizados_desmontados != True:
+            for motorizado in motorizados_asignados:
+                motorizado.click()
+                self.tester.click_button_by_id("alertify-ok")
+                sleep(2)
+                break
+            motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/div/input[@class="btn btn-primary"]')
+        print("Motorizados Desasignados")
+    
+    def cierre_periodo(self):
+        print("Cerrando Periodo")
+        self.tester.click_button_by_id("btn_aceptar")
+        self.tester.click_button_by_id("alertify-ok")
+        sleep(5)
+        try:
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(10)
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(2)
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(10)
+        except:
+            pass
+        print("Periodo Cerrado")
