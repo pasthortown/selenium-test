@@ -1,4 +1,5 @@
 import random
+import sys
 from steps_anulacion import StepsAnulacion
 from steps_facturacion import StepsFacturacion
 from steps_fin import StepsFin
@@ -6,11 +7,12 @@ from steps_inicio import StepsInicio
 from steps_toma_pedido import StepsTomaPedido
 from tester import Test
 
-url_maxpoint = "http://192.168.101.68:1883/pos/"
-passwd_user = "159753"
-passwd_adm= "123"
-productos_factura = 1
-num_facturas = 2
+passwd_adm= sys.argv[1]
+passwd_user = sys.argv[2]
+url_maxpoint = "http://192.168.101.68:" + sys.argv[3] + "/pos/"
+num_facturas = int(sys.argv[4])
+productos_factura = int(sys.argv[5])
+
 facturas_generadas = []
 tester = Test("http://www.google.com/")
 steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user)
@@ -19,7 +21,7 @@ steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm)
 steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm)
 steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
 
-steps_inicio.inicio_periodo()
+# steps_inicio.inicio_periodo()
 steps_inicio.asignar_cajero()
 steps_inicio.confirmar_fondo()
 
