@@ -6445,3 +6445,24 @@ WebDriver BiDi listening on ws://127.0.0.1:55394
 console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofilez2qNmh\\search.json.mozlz4", (void 0)))
 DevTools listening on ws://127.0.0.1:55394/devtools/browser/952b8982-b420-4bc7-ac0e-82485ec36c1c
 JavaScript error: resource://gre/modules/URIFixup.jsm, line 307: NS_ERROR_FAILURE: Should pass a non-null uri
+1664980683352	geckodriver	INFO	Listening on 127.0.0.1:55743
+1664980686453	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "55744" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile4mLS6i"
+1664980686729	Marionette	INFO	Marionette enabled
+1664980686733	Marionette	INFO	Listening on port 55755
+Read port: 55755
+WebDriver BiDi listening on ws://127.0.0.1:55744
+1664980686839	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\luiss\\AppData\\Local\\Temp\\rust_mozprofile4mLS6i\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55744/devtools/browser/ae175d87-389a-43fe-8e9a-cc75625e7985
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664980754664	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+console.warn: LoginRecipes: "Falling back to a synchronous message for: http://192.168.101.68:1883."
+1664980783477	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:236:24
+TimedPromise@chrome://remote/content/marionette/sync.js:221:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31

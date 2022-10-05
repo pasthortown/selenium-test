@@ -21,7 +21,7 @@ steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm)
 steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm)
 steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
 
-# steps_inicio.inicio_periodo()
+steps_inicio.inicio_periodo()
 steps_inicio.asignar_cajero()
 steps_inicio.confirmar_fondo()
 
