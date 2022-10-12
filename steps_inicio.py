@@ -28,7 +28,7 @@ class StepsInicio:
             print("Asignando Cajero")
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_usr)
         self.tester.click_button_by_id("validar")
-        sleep(2)
+        sleep(300)
         try:
             self.tester.click_button_by_id("alertify-ok")
         except:
