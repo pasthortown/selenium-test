@@ -19,6 +19,9 @@ url_maxpoint = "http://" + sys.argv[3] + "/pos/"
 num_facturas = int(sys.argv[4])
 productos_factura = int(sys.argv[5])
 
+cuenta_facturas_generadas = 0
+ultima_mesa = ''
+num_comprobantes = num_facturas * 2
 facturas_generadas = []
 tester = Test("http://www.google.com/")
 steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user, logger, output)
@@ -27,62 +30,110 @@ steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm, logger, o
 steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm, logger, output)
 steps_fin = StepsFin(tester, url_maxpoint, passwd_adm, logger, output)
 
-steps_inicio.inicio_periodo()
-steps_inicio.asignar_cajero()
-steps_inicio.confirmar_fondo()
+try:
+    steps_inicio.inicio_periodo()
+except:
+    logger.log("Error al Iniciar Periodo")
+try:
+    steps_inicio.asignar_cajero()
+except:
+    logger.log("Error al Asignar Cajero")
+try:
+    steps_inicio.confirmar_fondo()
+except:
+    logger.log("Error al Confirmar Fondo")
+    
+try:
+    is_full_service = steps_inicio.login()
+except:
+    logger.log("Error al Autenticar el Usuario")
 
-is_full_service = steps_inicio.login()
-cuenta_facturas_generadas = 0
-ultima_mesa = ''
-num_comprobantes = num_facturas * 2
-
-while cuenta_facturas_generadas < num_comprobantes:
-    if is_full_service:
-        ultima_mesa = steps_toma_pedido.seleccionar_mesa()
-    solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
-    if solicita_datos_cliente:
-        steps_toma_pedido.omitir_datos_cliente()
-    steps_toma_pedido.toma_pedido(productos_factura)
-    cfac_id = steps_facturacion.cobrar()
-    facturas_generadas.append({"cfac_id": cfac_id, "tipo": "F"})
-    steps_facturacion.pago_efectivo()
-    cuenta_facturas_generadas = cuenta_facturas_generadas + 1
-    if (cuenta_facturas_generadas % 2):
-        steps_facturacion.factura_consumidor_final()
-    else:
-        steps_facturacion.factura_con_datos()
-    if (cuenta_facturas_generadas % 2):    
-        is_full_service = steps_inicio.login()
+tomando_pedido = True
+while tomando_pedido:
+    tomando_pedido = cuenta_facturas_generadas < num_comprobantes
+    try:
         if is_full_service:
-            steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+            ultima_mesa = steps_toma_pedido.seleccionar_mesa()
         solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
         if solicita_datos_cliente:
             steps_toma_pedido.omitir_datos_cliente()
-        steps_anulacion.anular_factura(cfac_id)
-        if is_full_service:
-            steps_toma_pedido.seleccionar_mesa(ultima_mesa)
-        solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
-        if solicita_datos_cliente:
-            steps_toma_pedido.omitir_datos_cliente()
-        if is_full_service:
-            steps_anulacion.cerrar_ultima_mesa()
-        for factura in facturas_generadas:
-            if (factura["cfac_id"] == cfac_id):
-                factura["tipo"]= "N"
+        steps_toma_pedido.toma_pedido(productos_factura)
+        cfac_id = steps_facturacion.cobrar()
+        facturas_generadas.append({"cfac_id": cfac_id, "tipo": "F"})
+        steps_facturacion.pago_efectivo()
+        cuenta_facturas_generadas = cuenta_facturas_generadas + 1
+        if (cuenta_facturas_generadas % 2):
+            steps_facturacion.factura_consumidor_final()
+        else:
+            steps_facturacion.factura_con_datos()
+        if (cuenta_facturas_generadas % 2):    
+            is_full_service = steps_inicio.login()
+            if is_full_service:
+                steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+            solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
+            if solicita_datos_cliente:
+                steps_toma_pedido.omitir_datos_cliente()
+            steps_anulacion.anular_factura(cfac_id)
+            if is_full_service:
+                steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+            solicita_datos_cliente = steps_toma_pedido.solicita_datos_cliente()
+            if solicita_datos_cliente:
+                steps_toma_pedido.omitir_datos_cliente()
+            if is_full_service:
+                steps_anulacion.cerrar_ultima_mesa()
+            for factura in facturas_generadas:
+                if (factura["cfac_id"] == cfac_id):
+                    factura["tipo"]= "N"
+    except:
+        logger.log("Error en la toma de pedido")
+        tomando_pedido = False
         
 for factura in facturas_generadas:
     prefix = "NC_"
     if (factura["tipo"] == "F"):
         prefix = "F_"
-    steps_facturacion.get_comprobante(factura["cfac_id"], factura["tipo"], output + "/documentos/ " + prefix + factura["cfac_id"] + '.png')
+    try:
+        steps_facturacion.get_comprobante(factura["cfac_id"], factura["tipo"], output + "/documentos/ " + prefix + factura["cfac_id"] + '.png')
+    except:
+        pass
 
-steps_fin.iniciar_desmontado_cajero()
-steps_fin.retiros()
-steps_fin.corte_x(output + '/documentos/corte_x.png')
-steps_fin.iniciar_desmontado_cajero()
-steps_fin.retiro_fondo()
-steps_fin.desasignar_cajero()
-steps_fin.funciones_gerente()
-steps_fin.fin_de_dia()
-steps_fin.desasignar_motorizados()
-steps_fin.cierre_periodo()
+try:
+    steps_fin.iniciar_desmontado_cajero()
+except:
+    logger.log("Error al iniciar desmontado de cajero")
+try:
+    steps_fin.retiros()
+except:
+    logger.log("Error al iniciar retiro de dinero")
+try:
+    steps_fin.corte_x(output + '/documentos/corte_x.png')
+except:
+    logger.log("Error al generar el reporte corte en X")
+try:
+    steps_fin.iniciar_desmontado_cajero()
+except:
+    logger.log("Error al continuar desmontado de cajero")
+try:
+    steps_fin.retiro_fondo()
+except:
+    logger.log("Error al retirar fondo")
+try:
+    steps_fin.desasignar_cajero()
+except:
+    logger.log("Error al desasignar cajero")
+try:
+    steps_fin.funciones_gerente()
+except:
+    logger.log("Error al ingresar a funciones gerente")
+try:
+    steps_fin.fin_de_dia()
+except:
+    logger.log("Error al iniciar el finalizado del dia")
+try:
+    steps_fin.desasignar_motorizados()
+except:
+    logger.log("Error al desasignar motorizados")
+try:
+    steps_fin.cierre_periodo()
+except:
+    logger.log("Error al cerrar periodo")
