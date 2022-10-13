@@ -1,26 +1,32 @@
+from datetime import datetime
 from time import sleep
 import random
+from logger import Logger
 from tester import Test
 import math
 
 class StepsFin:
-    def __init__(self, tester: Test, url_maxpoint, passwd_adm):
+    def __init__(self, tester: Test, url_maxpoint, passwd_adm, logger: Logger, output_folder):
         self.tester: Test = tester
+        self.output_folder = output_folder
+        self.logger: Logger = logger
         self.url_maxpoint = url_maxpoint
         self.passwd_adm = passwd_adm
     
     def iniciar_desmontado_cajero(self):
-        print("Iniciando Desmontado Cajero")
+        self.logger.log("Iniciando Desmontado Cajero")
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
-        print("Usuario Asignado: " + user)
+        self.logger.log("Usuario Asignado: " + user)
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_adm)
         self.tester.click_button_by_id("desmotar")
         sleep(10)
     
     def retiros(self):
-        print("Retiros")
+        self.logger.log("Retiros")
         self.tester.click_button_by_id("btn_retiroEfectivo")
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
         sleep(5)
         self.tester.click_button_by_id("btnEFECTIVO")
         sleep(5)
@@ -28,11 +34,13 @@ class StepsFin:
         denominaciones = self.buscar_denominaciones(self.tester.get_elements_by_xpath("//tr/td/input"))
         self.llenar_cantidades(totalEfectivo, denominaciones)
         sleep(2)
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
         self.tester.click_button_by_id("ok_BilletesEfectivo")
         sleep(2)
         self.tester.click_button_by_id("btn_okEfectivo")
         self.tester.click_button_by_id("alertify-ok")
-        print("Retiros Completado")
+        self.logger.log("Retiros Completado")
 
     def buscar_denominaciones(self, elementos):
         denominaciones = []
@@ -74,22 +82,24 @@ class StepsFin:
     
     def corte_x(self, path):
         self.iniciar_desmontado_cajero()
-        print("Realizando Corte en X")
+        self.logger.log("Realizando Corte en X")
         self.tester.click_button_by_id("btn_impresionCorteX")
         ctrc_id = self.tester.get_attribute_of_html_element_by_id("IDControlEstacion","value", False)
         usr_id = self.tester.get_attribute_of_html_element_by_id("hid_usuario","value", False)
         usr_id_admin = self.tester.get_attribute_of_html_element_by_id("hid_usuario","value", False)
         self.tester.navigate(self.url_maxpoint +"corte_caja/impresion_Corte_X.php?ctrc_id=" + ctrc_id + "&usr_id=" + usr_id + "&usr_id_admin=" + usr_id_admin + "&tipoReporte=CorteX")
         self.tester.capture(path)
-        print("Corte en X - Ejecutado")
+        self.logger.log("Corte en X - Ejecutado")
         sleep(1)
 
     def retiro_fondo(self):
-        print("Retirando Fondo")
+        self.logger.log("Retirando Fondo")
         self.tester.click_button_by_id("btn_corteCaja")
         sleep(2)
         self.tester.click_button_by_id("alertify-ok")
         sleep(5)
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
         self.tester.click_button_by_id("btn_cash")
         sleep(2)
         self.tester.fill_textbox_by_id("usr_claveAdmin", self.passwd_adm)
@@ -99,11 +109,11 @@ class StepsFin:
                 boton.click()
         sleep(2)
         self.tester.click_button_by_id("alertify-ok")
-        print("Fondo Retirado")
+        self.logger.log("Fondo Retirado")
         sleep(5)
 
     def desasignar_cajero(self):
-        print("Iniciando Desmontado de Cajero")
+        self.logger.log("Iniciando Desmontado de Cajero")
         self.tester.click_button_by_id("btn_corteCaja")
         sleep(2)
         self.tester.click_button_by_id("btnTEFECTIVO")
@@ -126,19 +136,21 @@ class StepsFin:
             pass
         try:
             self.tester.fill_textbox_by_id("txtArea","Pruebas QA - Desmontado cajero")
+            today = datetime.now()
+            self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
             self.tester.click_button_by_id("btn_okmotivo")
             sleep(30)
             self.tester.click_button_by_id("alertify-ok")
             sleep(5)
         except:
             pass
-        print("Cajero Desmontado")
+        self.logger.log("Cajero Desmontado")
     
     def funciones_gerente(self):
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
         if (user == 'NO ASIGNADO'):
-            print("Iniciando Cierre de Periodo")
+            self.logger.log("Iniciando Cierre de Periodo")
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_adm)
         self.tester.click_button_by_id("btn_ingreso_Admin")
         try:
@@ -147,7 +159,9 @@ class StepsFin:
             pass
         sleep(5)
 
-    def fin_de_dia(self):    
+    def fin_de_dia(self):   
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png") 
         botones_funciones_gerente = self.tester.get_elements_by_xpath('//input[@class="btnFuncionGerente boton"]')
         for boton in botones_funciones_gerente:
             if (boton.get_attribute("value")=="Fin de Dia"):
@@ -156,31 +170,42 @@ class StepsFin:
         sleep(5)
 
     def desasignar_motorizados(self):
-        print("Desasignando Motorizados")
+        self.logger.log("Desasignando Motorizados")
         motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/div/input[@class="btn btn-primary"]')
         motorizados_desmontados = motorizados_asignados[0].get_attribute("value") == 'Ningún Motorizado Asignado'
         while motorizados_desmontados != True:
             for motorizado in motorizados_asignados:
                 motorizado.click()
+                today = datetime.now()
+                self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
                 self.tester.click_button_by_id("alertify-ok")
                 sleep(2)
                 break
             motorizados_asignados = self.tester.get_elements_by_xpath('//div[@id="motorizados"]/input[@class="btn btn-primary"]')
             motorizados_desmontados = motorizados_asignados[0].get_attribute("value") == 'Ningún Motorizado Asignado'
-        print("Motorizados Desasignados")
+        self.logger.log("Motorizados Desasignados")
     
     def cierre_periodo(self):
-        print("Cerrando Periodo")
+        self.logger.log("Cerrando Periodo")
         self.tester.click_button_by_id("btn_aceptar")
         self.tester.click_button_by_id("alertify-ok")
         sleep(5)
         try:
             self.tester.click_button_by_id("alertify-ok")
             sleep(10)
-            self.tester.click_button_by_id("alertify-ok")
-            sleep(2)
+        except:
+            pass
+        try:
             self.tester.click_button_by_id("alertify-ok")
             sleep(10)
         except:
             pass
-        print("Periodo Cerrado")
+        try:
+            self.tester.click_button_by_id("alertify-ok")
+            sleep(10)
+        except:
+            pass
+        self.tester.navigate(self.url_maxpoint)
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cierre_dia") + ".png")
+        self.logger.log("Periodo Cerrado")

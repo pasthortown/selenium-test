@@ -27,6 +27,11 @@ class Test:
     def wait_for_html_element_by_id(self, id, wait_time = 30):
         WebDriverWait(self.driver, wait_time).until(EC.visibility_of_element_located((By.ID, id)))
 
+    def get_element_by_id(self, id, validate_if_shows=True):
+        if validate_if_shows:
+            self.wait_for_html_element_by_id(id)
+        return self.driver.find_element(By.ID, id)
+
     def get_attribute_of_html_element_by_id(self, id, attribute, validate_if_shows=True):
         if validate_if_shows:
             self.wait_for_html_element_by_id(id)

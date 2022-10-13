@@ -6,20 +6,26 @@ from steps_fin import StepsFin
 from steps_inicio import StepsInicio
 from steps_toma_pedido import StepsTomaPedido
 from tester import Test
+from logger import Logger
+from datetime import datetime
 
+today = datetime.now()
+output = './resultados'
+filename = "logs" + today.strftime("_%m_%d_%y") + ".txt"
+logger = Logger(output, filename)
 passwd_adm= sys.argv[1]
 passwd_user = sys.argv[2]
-url_maxpoint = "http://192.168.101.68:" + sys.argv[3] + "/pos/"
+url_maxpoint = "http://" + sys.argv[3] + "/pos/"
 num_facturas = int(sys.argv[4])
 productos_factura = int(sys.argv[5])
 
 facturas_generadas = []
 tester = Test("http://www.google.com/")
-steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user)
-steps_toma_pedido = StepsTomaPedido(tester, url_maxpoint, passwd_adm)
-steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm)
-steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm)
-steps_fin = StepsFin(tester, url_maxpoint, passwd_adm)
+steps_inicio = StepsInicio(tester, url_maxpoint, passwd_adm, passwd_user, logger, output)
+steps_toma_pedido = StepsTomaPedido(tester, url_maxpoint, passwd_adm, logger, output)
+steps_facturacion = StepsFacturacion(tester, url_maxpoint, passwd_adm, logger, output)
+steps_anulacion = StepsAnulacion(tester, url_maxpoint, passwd_adm, logger, output)
+steps_fin = StepsFin(tester, url_maxpoint, passwd_adm, logger, output)
 
 steps_inicio.inicio_periodo()
 steps_inicio.asignar_cajero()
@@ -65,14 +71,14 @@ while cuenta_facturas_generadas < num_comprobantes:
                 factura["tipo"]= "N"
         
 for factura in facturas_generadas:
-    folder = "notas_credito"
+    prefix = "NC_"
     if (factura["tipo"] == "F"):
-        folder = "facturas"
-    steps_facturacion.get_comprobante(factura["cfac_id"], factura["tipo"], './resultados/' + folder + '/' + factura["cfac_id"] + '.png')
+        prefix = "F_"
+    steps_facturacion.get_comprobante(factura["cfac_id"], factura["tipo"], output + "/documentos/ " + prefix + factura["cfac_id"] + '.png')
 
 steps_fin.iniciar_desmontado_cajero()
 steps_fin.retiros()
-steps_fin.corte_x('./resultados/corte_x.png')
+steps_fin.corte_x(output + '/documentos/corte_x.png')
 steps_fin.iniciar_desmontado_cajero()
 steps_fin.retiro_fondo()
 steps_fin.desasignar_cajero()

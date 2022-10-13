@@ -1,10 +1,14 @@
+from datetime import datetime
 from time import sleep
 import random
+from logger import Logger
 from tester import Test
 
 class StepsInicio:
-    def __init__(self, tester: Test, url_maxpoint, passwd_adm, passwd_user):
+    def __init__(self, tester: Test, url_maxpoint, passwd_adm, passwd_user, logger: Logger, output_folder):
         self.tester: Test = tester
+        self.output_folder = output_folder
+        self.logger: Logger = logger
         self.url_maxpoint = url_maxpoint
         self.passwd_adm = passwd_adm
         self.passwd_usr = passwd_user
@@ -13,22 +17,30 @@ class StepsInicio:
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
         if (user == 'NO ASIGNADO'):
-            print("Iniciando Periodo")
+            self.logger.log("Iniciando Periodo")
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_adm)
         self.tester.click_button_by_id("btn_iniciarPeriodo")
         sleep(10)
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_inicio_periodo") + '.png')
+        sleep(1)
         self.tester.click_button_by_id("btn_guardar_periodo")
         self.tester.click_button_by_id("alertify-ok")
-        print("Periodo Iniciado")
+        self.logger.log("Periodo Iniciado")
     
     def asignar_cajero(self):
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
         if (user == 'NO ASIGNADO'):
-            print("Asignando Cajero")
+            self.logger.log("Asignando Cajero")
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_usr)
         self.tester.click_button_by_id("validar")
-        sleep(300)
+        esperando_validaciones = True
+        while(esperando_validaciones):
+            style = self.tester.get_element_by_id("mdl_rdn_pdd_crgnd",False).get_attribute("style")
+            sleep(5)
+            if (style == "display: none;"):
+                esperando_validaciones = False
         try:
             self.tester.click_button_by_id("alertify-ok")
         except:
@@ -62,22 +74,29 @@ class StepsInicio:
     def confirmar_fondo(self):
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
-        print("Asignando Cajero: " + user)
+        self.logger.log("Asignando Cajero: " + user)
+        today = datetime.now()
+        self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_cajero_asignado") + '.png')
+        sleep(1)
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_usr)
         self.tester.click_button_by_id("btn_ingresarOk")
         sleep(5)
         self.tester.click_button_by_id("alertify-ok")
         sleep(10)
-        print("Cajero Asignado: " + user)
+        self.logger.log("Cajero Asignado: " + user)
         self.tester.navigate(self.url_maxpoint )
 
     def login(self):
-        print("Abriendo Maxpoint")
+        self.logger.log("Abriendo Maxpoint")
         self.tester.navigate(self.url_maxpoint )
         user = self.tester.get_attribute_of_html_element_by_id("Respuesta_Estacion", "innerHTML")
-        print("Usuario Asignado: " + user)
+        self.logger.log("Usuario Asignado: " + user)
         self.tester.fill_textbox_by_id("usr_clave", self.passwd_usr)
         self.tester.click_button_by_id("btn_ingresarOk")
+        try:
+            self.tester.click_button_by_id("alertify-ok")
+        except:
+            pass
         try:
             self.tester.click_button_by_id("alertify-ok")
         except:
@@ -89,5 +108,5 @@ class StepsInicio:
             is_full_service = False
             pass
         if is_full_service:
-            print("Estación Full Service")
+            self.logger.log("Estación Full Service")
         return is_full_service

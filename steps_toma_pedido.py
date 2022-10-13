@@ -1,20 +1,35 @@
 from time import sleep
 import random
+
+from exceptiongroup import catch
+from logger import Logger
 from tester import Test
+from datetime import datetime
 
 class StepsTomaPedido:
-    def __init__(self, tester: Test, url_maxpoint, passwd_adm):
+    def __init__(self, tester: Test, url_maxpoint, passwd_adm, logger: Logger, output_folder):
         self.tester: Test = tester
+        self.output_folder = output_folder
+        self.logger: Logger = logger
         self.url_maxpoint = url_maxpoint
         self.passwd_adm = passwd_adm
     
     def seleccionar_mesa(self, id_mesa_force = ''):
-        mesas = self.tester.get_elements_by_css_class("mesa")
+        try:
+            mesas = self.tester.get_elements_by_css_class("mesa")
+        except:
+            mesas = []
+        if (len(mesas) == 0):
+            try:
+                self.tester.click_button_by_id("PedidoRapido")
+            except:
+                pass
+            return 'NO MESAS'
         id_ultima_mesa = mesas[len(mesas) - 1].get_attribute("id")
         id_mesa = mesas[random.randint(0, len(mesas) - 2)].get_attribute("id")
         if id_mesa_force != '':
             id_mesa = id_mesa_force
-        print("Mesa seleccionada: " + id_mesa)
+        self.logger.log("Mesa seleccionada: " + id_mesa)
         sleep(2)
         self.tester.click_button_by_id(id_mesa)
         sleep(2)
@@ -42,7 +57,7 @@ class StepsTomaPedido:
         sleep(2)
     
     def toma_pedido(self, num_productos):
-        print("Tomando Pedido")
+        self.logger.log("Tomando Pedido")
         botones_productos = self.tester.get_elements_by_xpath('//div[@id="barraProducto"]/button')
         productos_ingresados = []
         for i in range(1,num_productos + 1):
@@ -59,7 +74,9 @@ class StepsTomaPedido:
                     productos_ingresados.append(index)
                     valido = True
             id_producto = botones_productos[index].get_attribute("id")
-            print("Agregando Producto: " + botones_productos[index].get_attribute("innerHTML"))
+            today = datetime.now()
+            self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_toma_pedido") + ".png")    
+            self.logger.log("Agregando Producto: " + botones_productos[index].get_attribute("innerHTML"))
             sleep(2)
             self.tester.click_button_by_id(id_producto)
             sleep(2)
@@ -89,11 +106,30 @@ class StepsTomaPedido:
                     if (tipo_grupo == 'preguntasTituloOpcional'):
                         try:
                             if (len(respuestas_grupo) > 0):
-                                print("Respondiendo Pregunta: " + titulo_grupo)
+                                self.logger.log("Respondiendo Pregunta: " + titulo_grupo)
                                 index = random.randint(0, len(respuestas_grupo) - 1)
-                                print("Seleccionando Respuesta: " + respuestas_grupo[index].get_attribute("innerHTML"))
+                                today = datetime.now()
+                                self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_toma_pedido") + ".png")
+                                self.logger.log("Seleccionando Respuesta: " + respuestas_grupo[index].get_attribute("innerHTML"))
                                 sleep(2)
                                 respuestas_grupo[index].click()
                         except:
                             pass
+                    else:
+                        min = int(titulo_grupo.split("Min:")[1].split("-")[0].strip())
+                        max = int(titulo_grupo.split("Max:")[1].split(")")[0].strip())
+                        cuenta = 0
+                        while(cuenta < max):
+                            try:
+                                if (len(respuestas_grupo) > 0):
+                                    self.logger.log("Respondiendo Pregunta: " + titulo_grupo)
+                                    index = random.randint(0, len(respuestas_grupo) - 1)
+                                    today = datetime.now()
+                                    self.tester.capture(self.output_folder + '/proceso/' + today.strftime("%Y_%m_%d_%H_%M_%S_toma_pedido") + ".png")
+                                    self.logger.log("Seleccionando Respuesta: " + respuestas_grupo[index].get_attribute("innerHTML"))
+                                    sleep(2)
+                                    respuestas_grupo[index].click()
+                                    cuenta = cuenta + 1
+                            except:
+                                pass
                 self.tester.click_button_by_id("btn_prgnts_sgrds_cnfrmar")
