@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="pdfkit-page-size" content="A4"/>
+        <meta name="pdfkit-orientation" content="Portrait"/>
+        <meta name="pdfkit-encoding" content="UTF-8"/>
+    </head>
+    <style>
+        .table_bordered {
+          font-size: 30px;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        .table_bordered td, .table_bordered th {
+          border: 1px solid black;
+          padding: 2px;
+        }
+        
+        .table_bordered th {
+          padding-top: 5px;
+          padding-bottom: 5px;
+          text-align: center;
+          background-color: silver;
+          color: black;
+        }
+
+        .text-default {
+            font-size: 30px;
+            text-align: justify;
+        }
+
+        .page_break {
+          page-break-before: always;
+        }
+
+        body {
+          margin-left: 2cm; 
+          margin-right: 1cm;
+        }
+
+        .face_page {
+            padding-left: 2cm; 
+            padding-right: 1cm;
+            width: 24cm; height: 42cm;
+            background: -webkit-linear-gradient(right, rgb(155, 12, 12), rgb(155, 12, 12) 40%, white 40%, white);
+        }
+        
+        .header {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 7cm;
+        }
+    </style>
+    <body>
+        <div class="face_page">
+            <div style="width: 100%; height: 5cm;"></div>
+            <div style="margin-left: 70%; width: 30%; font-size: 60px; text-align: right; color: white;">{{fecha}}</div>
+            <div style="width: 100%; height: 2cm;"></div>
+            <div style="width: 95%; height: 3cm; line-height: 3cm; background-color: black; font-size: 60px; color: white; text-align: center;">{{titulo}}</div>
+            <div style="width: 100%; height: 2cm;"></div>
+            <div style="width: 100%; text-align: center;">
+                <img style="width: auto; height: 8cm;" src="http://intfoodservices.com/images/logo-grupo-kfc.png"/>
+            </div>
+            <div style="width: 100%; height: 6cm;"></div>
+            <div style="margin-left: 70%; width: 30%; font-size: 30px; text-align: right; color: white;">{{fecha}}<br/>Grupo KFC - Departamento de Calidad de Software</div>
+        </div>
+        <div class="page_break"></div>
+        <h1>1. {{titulo.upper()}}</h1>
+        <table class="table_bordered">
+            <tbody>
+                <tr><th style="text-align: right;">Fecha</th><td>{{fecha}}</td></tr>
+                <tr><th style="text-align: right;">Responsable</th><td>Departamento de Calidad de Software</td></tr>
+                <tr><th style="text-align: right;">Lider</th><td>Andres Alejandro Romero Barreto</td></tr>
+            </tbody>
+        </table>
+        <div style="width: 100%; height: 2cm;"></div>
+        <h1>2. DESCRIPCIÓN</h1>
+        <div class="text-default">
+            El presente documento especifica los resultados obtenidos de las pruebas de regresión 
+            ejecutadas por parte del Departamento de Calidad de Software. A continuación, se detallan 
+            los procesos ejecutados y se presentan las evidencias correspondientes. 
+        </div>
+        <div style="width: 100%; height: 2cm;"></div>
+        <h1>3. PROCESO EJECUTADO</h1>
+        <table class="table_bordered">
+            <tbody>
+                <tr><th>No.</th><th>Descripción</th></tr>
+                {% for paso in pasos -%}
+                <tr><th>{{loop.index}}</th><td>{{paso}}</td></tr>
+                {% endfor -%}
+            </tbody>
+        </table>
+        <div style="width: 100%; height: 2cm;"></div>
+        <h1>4. EVIDENCIAS</h1>
+        {% for evidencia in evidencias_proceso -%}
+        <div style="width: 100%; text-align: center; padding: 20px;">
+            <img style="width: 95%; height: auto;" src="{{evidencia}}" alt=""/>
+        </div>
+        {% endfor -%}
+        <div class="page_break"></div>
+        <h1>5. CONDICIONES</h1>
+        <div class="text-default">
+            - Las pruebas de regresión han sido ejecutadas considerando las configuraciones proporconadas  
+            por parte de los líderes de los equipos de desarrollo correspondientes. <br/><br/>
+            - Se han utilizado los entornos preparados por el Departamento de Calidad de Software en los 
+            servidores configurados dentro de la red de la empresa y es posible que los mismos, guarden 
+            pequeñas diferencias con los ambientes de producción.
+        </div>
+        <div style="width: 100%; height: 2cm;"></div>
+        <h1>6. APROBACIÓN DEL INFORME</h1>
+        <div class="text-default">
+            La siguiente firma representa la aceptación de este documento, por parte del Departamento de Calidad de Software y el Departamento de Desarrollo de Software y Proyectos.
+        </div>
+        <div style="width: 100%; height: 1cm;"></div>
+        <table class="table_bordered">
+            <tbody>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Departamento</th>
+                    <th>Firma</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">Andres Romero</td>
+                    <td style="text-align: center;">Calidad de Software</td>
+                    <td style="width: 10cm; height: 4cm;"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">José Fernandez</td>
+                    <td style="text-align: center;">Desarrollo de Software</td>
+                    <td style="width: 10cm; height: 4cm;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
