@@ -1,0 +1,33 @@
+Iniciando Periodo
+Periodo Iniciado
+Asignando Cajero
+Asignando Cajero: DELIVERYMXP
+Cajero Asignado: DELIVERYMXP
+Abriendo Maxpoint
+Usuario Asignado: DELIVERYMXP
+Estación Full Service
+Tomando Pedido
+Agregando Producto: POP CORN FAMILIAR 
+Agregando Producto: POP CORN PEQUENO 
+Cobrando
+Factura: K020F001084057
+Pago en Efectivo
+Factura a Consumidor Final
+Abriendo Maxpoint
+Usuario Asignado: DELIVERYMXP
+Estación Full Service
+Iniciando Anulación de Factura
+Llenando Datos de Cliente
+Iniciando Desmontado Cajero
+Usuario Asignado: DELIVERYMXP
+Realizando Corte en X
+Corte en X - Ejecutado
+Iniciando Desmontado Cajero
+Usuario Asignado: DELIVERYMXP
+Retirando Fondo
+Iniciando Desmontado de Cajero
+Iniciando Cierre de Periodo
+Desasignando Motorizados
+Motorizados Desasignados
+Cerrando Periodo
+Periodo Cerrado
