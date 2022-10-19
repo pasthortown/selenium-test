@@ -12,13 +12,6 @@ from datetime import datetime
 
 @singleton
 class Executor:
-
-    __instance = None
-
-    def __new__(cls):
-        if (Executor.__instance is None):
-            Executor.__instance == object.__new__(cls)
-        return Executor.__instance
             
     def __init__(self, url_maxpoint, passwd_adm, passwd_user):        
         self.output_folder = './resultados'
