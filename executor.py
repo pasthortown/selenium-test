@@ -47,51 +47,50 @@ class Executor:
             self.logger.log("Error al Autenticar el Usuario")
         return is_full_service
     
-    def toma_pedido(self, num_facturas, productos_factura, is_full_service):
-        cuenta_facturas_generadas = 0
+    def generar_factura(self, num_productos, is_full_service, consumidor_final):
         ultima_mesa = ''
-        num_comprobantes = num_facturas * 2
-        facturas_generadas = []
-        tomando_pedido = True
-        while tomando_pedido:
-            tomando_pedido = cuenta_facturas_generadas < num_comprobantes
-            try:
-                if is_full_service:
-                    ultima_mesa = self.steps_toma_pedido.seleccionar_mesa()
-                solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
-                if solicita_datos_cliente:
-                    self.steps_toma_pedido.omitir_datos_cliente()
-                self.steps_toma_pedido.toma_pedido(productos_factura)
-                cfac_id = self.steps_facturacion.cobrar()
-                facturas_generadas.append({"cfac_id": cfac_id, "tipo": "F"})
-                self.steps_facturacion.pago_efectivo()
-                cuenta_facturas_generadas = cuenta_facturas_generadas + 1
-                if (cuenta_facturas_generadas % 2):
-                    self.steps_facturacion.factura_consumidor_final()
-                else:
-                    self.steps_facturacion.factura_con_datos()
-                if (cuenta_facturas_generadas % 2):    
-                    is_full_service = self.steps_inicio.login()
-                    if is_full_service:
-                        self.steps_toma_pedido.seleccionar_mesa(ultima_mesa)
-                    solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
-                    if solicita_datos_cliente:
-                        self.steps_toma_pedido.omitir_datos_cliente()
-                    self.steps_anulacion.anular_factura(cfac_id)
-                    if is_full_service:
-                        self.steps_toma_pedido.seleccionar_mesa(ultima_mesa)
-                    solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
-                    if solicita_datos_cliente:
-                        self.steps_toma_pedido.omitir_datos_cliente()
-                    if is_full_service:
-                        self.steps_anulacion.cerrar_ultima_mesa()
-                    for factura in facturas_generadas:
-                        if (factura["cfac_id"] == cfac_id):
-                            factura["tipo"]= "N"
-            except:
-                self.logger.log("Error en la toma de pedido")
-                tomando_pedido = False
-        return facturas_generadas
+        toReturn = { "factura": {"cfac_id": 'ERROR', "tipo": "ERROR"}, "ultima_mesa": ultima_mesa }
+        try:
+            if is_full_service:
+                ultima_mesa = self.steps_toma_pedido.seleccionar_mesa()
+            solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
+            if solicita_datos_cliente:
+                self.steps_toma_pedido.omitir_datos_cliente()
+            self.steps_toma_pedido.toma_pedido(num_productos)
+            cfac_id = self.steps_facturacion.cobrar()
+            toReturn = { "factura": {"cfac_id": cfac_id, "tipo": "F"}, "ultima_mesa": ultima_mesa }
+            self.steps_facturacion.pago_efectivo()
+            cuenta_facturas_generadas = cuenta_facturas_generadas + 1
+            if (consumidor_final):
+                self.steps_facturacion.factura_consumidor_final()
+            else:
+                self.steps_facturacion.factura_con_datos()
+        except:
+            self.logger.log("Error en la facturación")
+        return toReturn
+
+    def anular_factura(self, is_full_service, ultima_mesa, cfac_id):
+        anulado = False
+        try:
+            is_full_service = self.steps_inicio.login()
+            if is_full_service:
+                self.steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+            solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
+            if solicita_datos_cliente:
+                self.steps_toma_pedido.omitir_datos_cliente()
+            self.steps_anulacion.anular_factura(cfac_id)
+            if is_full_service:
+                self.steps_toma_pedido.seleccionar_mesa(ultima_mesa)
+            solicita_datos_cliente = self.steps_toma_pedido.solicita_datos_cliente()
+            if solicita_datos_cliente:
+                self.steps_toma_pedido.omitir_datos_cliente()
+            if is_full_service:
+                self.steps_anulacion.cerrar_ultima_mesa() 
+            anulado = True
+        except:
+            anulado = False
+            self.logger.log("Error en la anulación")
+        return anulado
     
     def print_comprobantes(self, facturas_generadas):
         for factura in facturas_generadas:
