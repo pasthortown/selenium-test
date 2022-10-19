@@ -1,5 +1,6 @@
 import random
 import sys
+from singleton import singleton
 from steps_anulacion import StepsAnulacion
 from steps_facturacion import StepsFacturacion
 from steps_fin import StepsFin
@@ -9,7 +10,16 @@ from tester import Test
 from logger import Logger
 from datetime import datetime
 
+@singleton
 class Executor:
+
+    __instance = None
+
+    def __new__(cls):
+        if (Executor.__instance is None):
+            Executor.__instance == object.__new__(cls)
+        return Executor.__instance
+            
     def __init__(self, url_maxpoint, passwd_adm, passwd_user):        
         self.output_folder = './resultados'
         filename = "logs" + datetime.now().strftime("_%m_%d_%y") + ".txt"

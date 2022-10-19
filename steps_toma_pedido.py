@@ -3,9 +3,11 @@ import random
 
 from exceptiongroup import catch
 from logger import Logger
+from singleton import singleton
 from tester import Test
 from datetime import datetime
 
+@singleton
 class StepsTomaPedido:
     def __init__(self, tester: Test, url_maxpoint, passwd_adm, logger: Logger, output_folder):
         self.tester: Test = tester

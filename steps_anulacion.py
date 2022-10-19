@@ -2,8 +2,10 @@ from datetime import datetime
 from time import sleep
 import random
 from logger import Logger
+from singleton import singleton
 from tester import Test
 
+@singleton
 class StepsAnulacion:
     def __init__(self, tester: Test, url_maxpoint, passwd_adm, logger: Logger, output_folder):
         self.tester: Test = tester

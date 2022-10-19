@@ -1,6 +1,8 @@
 import os
 import shutil
+from singleton import singleton
 
+@singleton
 class Logger:
     def __init__(self, output_folder, filename):
         self.output_folder = output_folder
