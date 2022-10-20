@@ -1,0 +1,94 @@
+version: "3"
+services:
+  firefox_A:
+    image: selenium/node-firefox:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_SCREEN_WIDTH=1366 
+      - SE_SCREEN_HEIGHT=768 
+      - SE_SCREEN_DEPTH=24 
+      - SE_SCREEN_DPI=74
+      - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_SESSION_TIMEOUT=60
+      - SE_NODE_MAX_SESSIONS=4
+
+  firefox_B:
+    image: selenium/node-firefox:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_SCREEN_WIDTH=1366 
+      - SE_SCREEN_HEIGHT=768 
+      - SE_SCREEN_DEPTH=24 
+      - SE_SCREEN_DPI=74
+      - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_SESSION_TIMEOUT=60
+      - SE_NODE_MAX_SESSIONS=4
+
+  firefox_C:
+    image: selenium/node-firefox:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_SCREEN_WIDTH=1366 
+      - SE_SCREEN_HEIGHT=768 
+      - SE_SCREEN_DEPTH=24 
+      - SE_SCREEN_DPI=74
+      - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_SESSION_TIMEOUT=60
+      - SE_NODE_MAX_SESSIONS=4
+
+  firefox_D:
+    image: selenium/node-firefox:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_SCREEN_WIDTH=1366 
+      - SE_SCREEN_HEIGHT=768 
+      - SE_SCREEN_DEPTH=24 
+      - SE_SCREEN_DPI=74
+      - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_SESSION_TIMEOUT=60
+      - SE_NODE_MAX_SESSIONS=4
+      
+  firefox_E:
+    image: selenium/node-firefox:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_SCREEN_WIDTH=1366 
+      - SE_SCREEN_HEIGHT=768 
+      - SE_SCREEN_DEPTH=24 
+      - SE_SCREEN_DPI=74
+      - SE_VNC_NO_PASSWORD=1
+      - SE_NODE_SESSION_TIMEOUT=60
+      - SE_NODE_MAX_SESSIONS=4
+
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"

@@ -1,6 +1,6 @@
 from time import sleep
 from selenium import webdriver
-# from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,11 +12,11 @@ from singleton import singleton
 class Test:
     def __init__(self, url):
         sleep(5)
-        # driver = webdriver.Remote("http://192.168.101.54:4444/wd/hub", desired_capabilities=DesiredCapabilities.FIREFOX)
+        # self.driver = webdriver.Remote("http://localhost:4444/wd/hub", desired_capabilities=DesiredCapabilities.FIREFOX)
         self.driver = webdriver.Firefox(executable_path=r"geckodriver.exe")
         self.driver.implicitly_wait(30)
         self.driver.get(url)
-
+        
     def navigate(self, url):
         self.driver.get(url)
         
