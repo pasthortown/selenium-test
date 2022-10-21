@@ -1,6 +1,5 @@
 from datetime import datetime
 from time import sleep
-import random
 from logger import Logger
 from singleton import singleton
 from tester import Test

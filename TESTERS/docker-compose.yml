@@ -1,0 +1,74 @@
+version: '3'
+
+networks:
+  ejecutores_pruebas_net:
+    ipam:
+      config:
+        - subnet: 172.89.0.0/24
+
+services:
+  tester_A:
+    image: kfc/tester:python
+    restart: always
+    volumes: 
+    - ./app:/app
+    - ./tester_A:/output
+    env_file:
+    - ./tester_A/variables.env
+    environment:
+      TZ: America/Bogota
+    networks:
+      ejecutores_pruebas_net:
+        ipv4_address: 172.89.0.10
+  tester_B:
+    image: kfc/tester:python
+    restart: always
+    volumes: 
+    - ./app:/app
+    - ./tester_B:/output
+    env_file:
+    - ./tester_B/variables.env
+    environment:
+      TZ: America/Bogota
+    networks:
+      ejecutores_pruebas_net:
+        ipv4_address: 172.89.0.11
+  tester_C:
+    image: kfc/tester:python
+    restart: always
+    volumes: 
+    - ./app:/app
+    - ./tester_C:/output
+    env_file:
+    - ./tester_C/variables.env
+    environment:
+      TZ: America/Bogota
+    networks:
+      ejecutores_pruebas_net:
+        ipv4_address: 172.89.0.12
+  tester_D:
+    image: kfc/tester:python
+    restart: always
+    volumes: 
+    - ./app:/app
+    - ./tester_D:/output
+    env_file:
+    - ./tester_D/variables.env
+    environment:
+      TZ: America/Bogota
+    networks:
+      ejecutores_pruebas_net:
+        ipv4_address: 172.89.0.13
+  tester_E:
+    image: kfc/tester:python
+    restart: always
+    volumes: 
+    - ./app:/app
+    - ./tester_E:/output
+    env_file:
+    - ./tester_E/variables.env
+    environment:
+      TZ: America/Bogota
+    networks:
+      ejecutores_pruebas_net:
+        ipv4_address: 172.89.0.14

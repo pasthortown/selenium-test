@@ -1,5 +1,3 @@
-import random
-import sys
 from singleton import singleton
 from steps_anulacion import StepsAnulacion
 from steps_facturacion import StepsFacturacion
@@ -14,8 +12,8 @@ from datetime import datetime
 class Executor:
             
     def __init__(self, url_maxpoint, passwd_adm, passwd_user):        
-        self.output_folder = './resultados'
-        filename = "logs" + datetime.now().strftime("_%m_%d_%y") + ".txt"
+        self.output_folder = '/output/resultados'
+        filename = "logs" + datetime.now().strftime("_%Y_%m_%d") + ".txt"
         self.tester = Test("http://www.google.com/")
         self.logger = Logger(self.output_folder, filename)
         self.steps_inicio = StepsInicio(self.tester, url_maxpoint, passwd_adm, passwd_user, self.logger, self.output_folder)

@@ -1,7 +1,6 @@
 from time import sleep
 import random
 
-from exceptiongroup import catch
 from logger import Logger
 from singleton import singleton
 from tester import Test
