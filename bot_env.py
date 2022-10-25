@@ -15,6 +15,7 @@ executor.iniciar_periodo()
 executor.asignar_cajero()
 executor.confirmar_fondo()
 is_full_service = executor.login()
+executor.separar_cuenta()
 
 cuenta_facturas_generadas = 0
 num_comprobantes = num_facturas * 2

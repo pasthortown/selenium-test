@@ -4,6 +4,7 @@ from steps_facturacion import StepsFacturacion
 from steps_fin import StepsFin
 from steps_inicio import StepsInicio
 from steps_toma_pedido import StepsTomaPedido
+from steps_separacion_cuentas import StepsSeparacionCuentas
 from tester import Test
 from logger import Logger
 from datetime import datetime
@@ -18,6 +19,7 @@ class Executor:
         self.logger = Logger(self.output_folder, filename)
         self.steps_inicio = StepsInicio(self.tester, url_maxpoint, passwd_adm, passwd_user, self.logger, self.output_folder)
         self.steps_toma_pedido = StepsTomaPedido(self.tester, url_maxpoint, passwd_adm, self.logger, self.output_folder)
+        self.steps_separacion_cuentas = StepsSeparacionCuentas(self.tester, url_maxpoint, passwd_adm, self.logger, self.output_folder)
         self.steps_facturacion = StepsFacturacion(self.tester, url_maxpoint, passwd_adm, self.logger, self.output_folder)
         self.steps_anulacion = StepsAnulacion(self.tester, url_maxpoint, passwd_adm, self.logger, self.output_folder)
         self.steps_fin = StepsFin(self.tester, url_maxpoint, passwd_adm, self.logger, self.output_folder)
@@ -47,6 +49,12 @@ class Executor:
         except:
             self.logger.log("Error al Autenticar el Usuario")
         return is_full_service
+    
+    def separar_cuenta(self):
+        try:
+            self.steps_separacion_cuentas()
+        except:
+            self.logger.log("Error en la separacion de cuentas")
     
     def generar_factura(self, num_productos, is_full_service, consumidor_final):
         ultima_mesa = ''

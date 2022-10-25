@@ -1,20 +1,19 @@
+from datetime import datetime
 from time import sleep
-import random
-
 from logger import Logger
 from singleton import singleton
 from tester import Test
-from datetime import datetime
+
 
 @singleton
-class StepsTomaPedido:
+class StepsSeparacionCuentas:
     def __init__(self, tester: Test, url_maxpoint, passwd_adm, logger: Logger, output_folder):
         self.tester: Test = tester
         self.output_folder = output_folder
         self.logger: Logger = logger
         self.url_maxpoint = url_maxpoint
         self.passwd_adm = passwd_adm
-    
+        
     def seleccionar_mesa(self, id_mesa_force = ''):
         try:
             mesas = self.tester.get_elements_by_css_class("mesa")
@@ -44,19 +43,7 @@ class StepsTomaPedido:
         except:
             pass
         return id_ultima_mesa
-    
-    def solicita_datos_cliente(self):
-        solicita_datos_cliente = True
-        try:
-            self.tester.wait_for_html_element_by_id("btn_opciones", 5)
-        except:
-            solicita_datos_cliente = False
-        return solicita_datos_cliente
 
-    def omitir_datos_cliente(self):
-        self.tester.click_button_by_id("btn_opciones")
-        sleep(2)
-    
     def toma_pedido(self, num_productos):
         self.logger.log("Tomando Pedido")
         botones_productos = self.tester.get_elements_by_xpath('//div[@id="barraProducto"]/button')
@@ -134,4 +121,39 @@ class StepsTomaPedido:
                             except:
                                 pass
                 self.tester.click_button_by_id("btn_prgnts_sgrds_cnfrmar")
-        
+
+    def separar_cuentas(self):
+        # 17 | click | id=boton_sidr | 
+        self.tester.get_element_by_id("boton_sidr").click()
+        # 18 | click | id=separarCuentas | 
+        self.tester.get_element_by_id("separarCuentas").click()
+        # 19 | click | id=alertify-ok | 
+        self.tester.get_element_by_id("alertify-ok").click()
+        # 20 | click | id=split_acumulado | 
+        self.tester.get_element_by_id("split_acumulado").click()
+        # 21 | click | css=#D4AA433E-F36B-1410-8AC1-00839939A349 > .listaproductosDesc | 
+        self.tester.get_elements_by_css_class("#D4AA433E-F36B-1410-8AC1-00839939A349 > .listaproductosDesc").click()
+        # 22 | click | id=id2 | 
+        self.tester.get_element_by_id("id2").click()
+        # 23 | click | id=btn_facturarCuenta | 
+        self.tester.get_element_by_id("btn_facturarCuenta").click()
+        # 24 | click | css=#btnAplicarPago > b | 
+        self.tester.get_elements_by_css_class("#btnAplicarPago > b").click()
+        # 26 | click | id=btnConsumidorFinal | 
+        self.tester.get_element_by_id("btnConsumidorFinal").click()
+        # 27 | click | id=alertify-ok | 
+        self.tester.get_element_by_id("alertify-ok").click()
+        # 28 | click | id=btn_facturarCuenta | 
+        self.tester.get_element_by_id("btn_facturarCuenta").click()
+        # 29 | click | css=#btnAplicarPago > b | 
+        self.tester.get_elements_by_css_class("#btnAplicarPago > b").click()
+        # 31 | click | id=rdo_pasaporte | 
+        self.tester.get_element_by_id("rdo_pasaporte").click()
+        # 32 | type | id=txtClienteCI | 139931082
+        self.tester.get_element_by_id("txtClienteCI").send_keys("139931082")
+        # 33 | click | id=btnClienteConfirmarDatos | 
+        self.tester.get_element_by_id("btnClienteConfirmarDatos").click()
+        # 34 | click | id=alertify-ok | 
+        self.tester.get_element_by_id("alertify-ok").click()
+        # 35 | click | id=alertify-ok | 
+        self.tester.get_element_by_id("alertify-ok").click()
